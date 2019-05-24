@@ -1,78 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <title>GifTastic</title>
-</head>
-
-<body>
-  <div id="buttons"></div>
-  <div id="images">
-  </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Giftastic</title>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript">
-
-
-    //array of animals
-    var animalArr = ["Cat", "Lion", "Monkey", "Dog", "Pengiun", "Deer",
-        "Rabbit", "Hamster", "Snake", "Frog"];
-    
-        //loop to populate buttons based on the array
-        for(var i=0; i<animalArr.length; i++){
-            var newButton = $("<button animal-type=" + animalArr[i] + ">");
-            newButton.text(animalArr[i]);
-            $("#buttons").append(newButton);
-        }
-
-    // Event listener for our cat-button
-    $("button").on("click", function() {
-
-        var animal = $(this).attr("animal-type");
-        console.log(animal);
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + 
-        animal + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-      })
-
-      .then(function(response) {
-        var results = response.data;
-        for (var i = 0; i < results.length; i++) {
-            if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
-              // Creating a div for the gif
-              var gifDiv = $("<div>");
-
-              // Storing the result item's rating
-              var rating = results[i].rating;
-
-              // Creating a paragraph tag with the result item's rating
-              var p = $("<p>").text("Rating: " + rating);
-
-              // Creating an image tag
-              var animalImage = $("<img>");
-
-              // Giving the image tag an src attribute of a proprty pulled off the
-              // result item
-              animalImage.attr("src", results[i].images.fixed_height.url);
-
-              // Appending the paragraph and personImage we created to the "gifDiv" div we created
-              if(j <= 1) {
-                gifDiv.append(p);
-                gifDiv.append(animalImage);
-                j++;
-              }
-
-              // Prepending the gifDiv to the "iamges" div in the HTML
-              $("#images").prepend(gifDiv);
-            }
-            
-          }
-        });
-    });
-  </script>
+  <script src="assets/javascript/app.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Giftastic!</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-8">
+                <div id="buttonGroup">
+                </div>
+            </div>
+          <div class="col-sm-4">
+              <div id="addAnimal">
+                  <form class="form-inline">
+                      <div class="form-group mx-sm-3 mb-2 mt-2">
+                        <label for="animalSubmit" class="sr-only">Animal</label>
+                        <input type="text" class="form-control" id="animalSubmit" placeholder="Animal">
+                      </div>
+                    <button id="addButton" type="submit" class="btn btn-primary mb-2">Add</button>
+                  </form>
+              </div>
+          </div>
+    </div>
+    <div class="container mt-5 ">
+      <div class='row' id="imageGroup">
+      </div>
+    </div>
 </body>
-
 </html>
